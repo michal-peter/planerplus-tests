@@ -17,12 +17,20 @@ class LoginPage {
 
   async gotoLogin() {
     await this.page.goto('/app');
+    await this.waitUntilLoaded();
     await this.dismissCookies();
   }
 
   async gotoRegister() {
     await this.page.goto('/app?mode=register');
+    await this.waitUntilLoaded();
     await this.dismissCookies();
+  }
+
+  /** The app shows "Ładowanie..." in the heading until it has initialised. */
+  async waitUntilLoaded() {
+    await expect(this.heading).not.toHaveText(/Ładowanie/);
+    await expect(this.heading).not.toBeEmpty();
   }
 
   async dismissCookies() {
