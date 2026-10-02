@@ -13,7 +13,8 @@ class DashboardPage {
   async expectAuthenticated() {
     // #app and #auth-pin can be visible at the same time, so match only the first element
     await expect(this.app.or(this.pinScreen).first()).toBeVisible({ timeout: 20000 });
-    await expect(this.page.locator('#auth')).toBeHidden();
+    // #auth-pin lives inside #auth, so check the login form itself rather than the container
+    await expect(this.page.locator('#abtn-login')).toBeHidden();
   }
 }
 
