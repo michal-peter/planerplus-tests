@@ -11,7 +11,8 @@ class DashboardPage {
 
   /** Credentials accepted: either the app shell or the encryption PIN prompt is shown. */
   async expectAuthenticated() {
-    await expect(this.app.or(this.pinScreen)).toBeVisible({ timeout: 20000 });
+    // #app and #auth-pin can be visible at the same time, so match only the first element
+    await expect(this.app.or(this.pinScreen).first()).toBeVisible({ timeout: 20000 });
     await expect(this.page.locator('#auth')).toBeHidden();
   }
 }
